@@ -10,6 +10,9 @@ export class DatabaseError extends CustomError {
   }
 
   serializeErrors() {
-    return [{ msg: this.msg }];
+    const message = this.msg.includes('validation failed')
+      ? this.msg.split(': ')[2]
+      : this.msg;
+    return [{ msg: message }];
   }
 }

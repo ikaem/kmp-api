@@ -25,13 +25,22 @@ const customerSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
+      validate: {
+        message: (props) => `${props.value} is already in use`,
+        validator: async function (email: string) {
+          const user = await Customer.findOne({ email });
+          if (user) return false;
+        },
+      },
     },
   },
   {
     toJSON: {
       transform(_doc, ret) {
         ret.id = ret._id;
-        delete ret.id;
+        delete ret._id;
+        delete ret.__v;
       },
     },
   }

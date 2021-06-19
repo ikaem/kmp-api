@@ -7,7 +7,7 @@ export class BadRequestError extends CustomError {
   constructor(private errors: ErrorData[]) {
     super('Invalid request sent');
 
-    Object.setPrototypeOf(this, BadRequestError);
+    Object.setPrototypeOf(this, BadRequestError.prototype);
   }
 
   serializeErrors() {

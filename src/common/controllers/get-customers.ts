@@ -1,7 +1,14 @@
 import { Request, Response } from 'express';
+import { Customer, DatabaseError } from '..';
 
-export const getCustomers = async (req: Request, res: Response) => {
-  res.send({
-    data: [{ id: '123', firstName: 'Karlo', email: 'karlo@karlo.com' }],
-  });
+export const getCustomers = async (_req: Request, res: Response) => {
+  try {
+    const customers = await Customer.find();
+
+    res.status(201).send({
+      data: customers,
+    });
+  } catch (e) {
+    throw new DatabaseError(e.message);
+  }
 };

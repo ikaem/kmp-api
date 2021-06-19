@@ -1,7 +1,22 @@
 import { Request, Response } from 'express';
+import { Customer } from '../';
+import { BadRequestError, DatabaseError } from '../errors';
 
 export const createCustomer = async (req: Request, res: Response) => {
-  res.send({
-    data: [{ id: '123', firstName: 'Karlo', email: 'karlo@karlo.com' }],
-  });
+  const { firstName, lastName, email } = req.body;
+
+  try {
+    const customer = Customer.build({
+      firstName,
+      lastName,
+      email,
+    });
+    await customer.save();
+
+    res.status(201).send({
+      data: customer,
+    });
+  } catch (e) {
+    throw new DatabaseError(e.message);
+  }
 };

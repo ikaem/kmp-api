@@ -1,7 +1,12 @@
 import Router from 'express';
 import { body, param } from 'express-validator';
 import { Types } from 'mongoose';
-import { createCustomer, deleteCustomer, getCustomers } from './common/';
+import {
+  createCustomer,
+  deleteCustomer,
+  getCustomers,
+  validateRequestData,
+} from './common/';
 
 const router = Router();
 
@@ -16,7 +21,8 @@ router.post(
   [
     body('firstName').notEmpty().withMessage('First name is required'),
     body('lastName').notEmpty().withMessage('Last name is required'),
-    body('email').isEmail().withMessage('First name is required'),
+    body('email').isEmail().withMessage('Valid email is required'),
+    validateRequestData,
   ],
   createCustomer
 );
@@ -28,6 +34,7 @@ router.delete(
       .notEmpty()
       .custom((v) => Types.ObjectId.isValid(v))
       .withMessage('Valid customer id is required'),
+    validateRequestData,
   ],
   deleteCustomer
 );
