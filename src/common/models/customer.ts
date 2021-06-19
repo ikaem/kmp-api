@@ -1,16 +1,5 @@
-import { Document, Schema, Model, model } from 'mongoose';
-
-interface CustomerAttrs {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
-interface CustomerDoc extends CustomerAttrs, Document {}
-
-interface CustomerModel extends Model<CustomerDoc> {
-  build(attrs: CustomerAttrs): CustomerDoc;
-}
+import { Schema, model } from 'mongoose';
+import { CustomerAttrs, CustomerDoc, CustomerModel } from '../types';
 
 const customerSchema = new Schema(
   {
@@ -28,7 +17,7 @@ const customerSchema = new Schema(
       unique: true,
       validate: {
         message: (props) => `${props.value} is already in use`,
-        validator: async function (email: string) {
+        validator: async (email: string) => {
           const user = await Customer.findOne({ email });
           if (user) return false;
         },

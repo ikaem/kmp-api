@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Customer } from '../';
-import { BadRequestError, DatabaseError } from '../errors';
+import { DatabaseError } from '../errors';
 
 export const createCustomer = async (req: Request, res: Response) => {
   const { firstName, lastName, email } = req.body;
