@@ -11,7 +11,11 @@ export interface CustomerAttrs {
   email: string;
 }
 
-export interface CustomerDoc extends CustomerAttrs, Document {}
+export interface CustomerDoc extends CustomerAttrs, Document {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface CustomerModel extends Model<CustomerDoc> {
   build(attrs: CustomerAttrs): CustomerDoc;

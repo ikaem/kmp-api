@@ -14,10 +14,10 @@ router.get('/', (_req, res) => {
   res.json('Welcome to kmp-api v0.01');
 });
 
-router.get('/customers', getCustomers);
+router.get('/api/customers', getCustomers);
 
 router.post(
-  '/customers',
+  '/api/customers',
   [
     body('firstName').notEmpty().withMessage('First name is required'),
     body('lastName').notEmpty().withMessage('Last name is required'),
@@ -28,7 +28,7 @@ router.post(
 );
 
 router.delete(
-  '/customers/:id',
+  '/api/customers/:id',
   [
     param('id')
       .notEmpty()

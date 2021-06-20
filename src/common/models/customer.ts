@@ -25,6 +25,7 @@ const customerSchema = new Schema(
     },
   },
   {
+    timestamps: true,
     toJSON: {
       transform(_doc, ret) {
         ret.id = ret._id;
